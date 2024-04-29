@@ -5,7 +5,6 @@ const todo = document.querySelector('.todos ul');
 const clearButton = document.querySelector('.clear');
 const filters = document.querySelectorAll('.filters input[type="radio"]');
 
-
 /* Change Theme */
 const themePreference = localStorage.getItem('theme');
 
@@ -22,7 +21,6 @@ theme.addEventListener('click', () => {
     theme.src = themePreference === 'light' ? 'images/icon-moon.svg' : 'images/icon-sun.svg';
     localStorage.setItem('theme', themePreference); // Save theme preference in local storage
 });
-
 
 /*Add items */
 addButton.addEventListener('click', addItem);
@@ -47,7 +45,6 @@ function addItem() {
     }
 }
 
-
 /*count items */
 const itemCount = document.querySelector('.count span');
 function updateCount(num) {
@@ -55,8 +52,6 @@ function updateCount(num) {
     const newCount = currentCount + num;
     itemCount.innerText = newCount >= 0 ? newCount : 0;
 }
-
-
 
 /*clear complete items */
 clearButton.addEventListener('click', clearCompletedTasks);
@@ -66,9 +61,7 @@ function clearCompletedTasks() {
     completedItems.forEach(item => item.closest('li').remove());
     updateCount(-numCompleted);
     // Subtract the number of completed items from the total count
-
 }
-
 
 /*Filters */
 filters.forEach(filter => {
