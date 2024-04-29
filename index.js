@@ -7,9 +7,20 @@ const filters = document.querySelectorAll('.filters input[type="radio"]');
 
 
 /* Change Theme */
+const themePreference = localStorage.getItem('theme');
+
+// Apply theme preference if it exists in local storage
+if (themePreference) {
+    document.body.classList.toggle('light', themePreference === 'light');
+    theme.src = themePreference === 'light' ? 'images/icon-moon.svg' : 'images/icon-sun.svg';
+}
+
+/* Change Theme */
 theme.addEventListener('click', () => {
     document.body.classList.toggle('light');
-    theme.src = document.body.classList.contains('light') ? 'images/icon-moon.svg' : 'images/icon-sun.svg';
+    const themePreference = document.body.classList.contains('light') ? 'light' : 'dark';
+    theme.src = themePreference === 'light' ? 'images/icon-moon.svg' : 'images/icon-sun.svg';
+    localStorage.setItem('theme', themePreference); // Save theme preference in local storage
 });
 
 
@@ -40,17 +51,22 @@ function addItem() {
 /*count items */
 const itemCount = document.querySelector('.count span');
 function updateCount(num) {
-    itemCount.innerText = +itemCount.innerText + num;
+    const currentCount = +itemCount.innerText;
+    const newCount = currentCount + num;
+    itemCount.innerText = newCount >= 0 ? newCount : 0;
 }
+
 
 
 /*clear complete items */
 clearButton.addEventListener('click', clearCompletedTasks);
-
 function clearCompletedTasks() {
     const completedItems = todo.querySelectorAll('.checkbox:checked');
+    const numCompleted = completedItems.length;
     completedItems.forEach(item => item.closest('li').remove());
-    updateCount(-1);
+    updateCount(-numCompleted);
+    // Subtract the number of completed items from the total count
+
 }
 
 
